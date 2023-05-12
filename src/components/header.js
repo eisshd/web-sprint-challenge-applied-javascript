@@ -47,11 +47,10 @@ const headerAppender = (selector) => {
   // so all that you need to do is pass it into the querySelector method
   // for the tests to work!
 
-  const header = document.querySelector(selector)
+  const headerDiv = document.querySelector(selector)
+  const header = Header('Lambda Times', 'January 6th, 2021', '26*')
   
-  
-
-  header.appendChild()
+  headerDiv.appendChild(header)
   return header
 }
 

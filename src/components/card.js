@@ -22,26 +22,40 @@ const Card = (article) => {
   //
 
   const card = document.createElement('div')
-  const headline = document.createElement('div')
+  // const headline = document.createElement('div')
   const author = document.createElement('div')
   const imgCont = document.createElement('div')
-  const imgSrc  = document.createElement('img')
-  const span = document.createElement('span')
+  // const imgSrc  = document.createElement('img')
+  // const span = document.createElement('span')
   
   card.classList.add('card')
-  headline.classList.add('headline')
+  // headline.classList.add('headline')
   author.classList.add('author')
   imgCont.classList.add('img-container')
   
-  card.appendChild(headline)
-  card.appendChild(author)
-  card.appendChild(imgCont)
-  imgCont.appendChild(imgSrc)
-  card.appendChild(span)
+  // card.appendChild(headline)
+  
+  author.appendChild(imgCont)
+  // imgCont.appendChild(imgSrc)
+  // author.appendChild(span)
 
-  headline.textContent = article.headline
-  imgSrc.src = article.articlePhoto
-  span.textContent = article.authorName
+  // headline.textContent = article.headline
+  article.forEach(element => {
+    const headline = document.createElement('div')
+    const span = document.createElement('span')
+    const imgSrc  = document.createElement('img')
+    headline.classList.add('headline')
+    headline.textContent = element.headline
+    span.textContent = element.authorName
+    imgSrc.src = element.authorPhoto
+    card.appendChild(headline)
+    author.appendChild(span)
+    imgCont.appendChild(imgSrc)
+  });
+  
+ card.appendChild(author)
+  // span.textContent = article.authorName
+  // imgSrc.src = article.authorPhoto
 
   return card
 }
@@ -56,16 +70,16 @@ const cardAppender = (selector) => {
   // Append each card to the element in the DOM that matches the selector passed to the function.
   //
 
-  const card = document.querySelector('.cards-container')
-  const cardElements = articles.map((array) => {
-    let article = Card(array)
-    return article
-  })
+  const card = document.querySelector(selector)
+  const javaDiv = document.querySelector('.javascript')
 
-  cardElements.forEach(element => {
-      card.appendChild(element)
-  });
-
+  axios.get('http://localhost:5001/api/articles')
+       .then((res) => {
+            const data = Card(res.data.articles.javascript)
+            console.log(res.data.articles.javascript)
+            card.appendChild(data)
+       })
+  
 
   return card
 }
