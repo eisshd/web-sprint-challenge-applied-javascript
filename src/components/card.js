@@ -22,41 +22,27 @@ const Card = (article) => {
   //
 
   const card = document.createElement('div')
-  // const headline = document.createElement('div')
+  const headline = document.createElement('div')
   const author = document.createElement('div')
   const imgCont = document.createElement('div')
-  // const imgSrc  = document.createElement('img')
-  // const span = document.createElement('span')
+  const imgSrc  = document.createElement('img')
+  const span = document.createElement('span')
   
   card.classList.add('card')
-  // headline.classList.add('headline')
+  headline.classList.add('headline')
   author.classList.add('author')
   imgCont.classList.add('img-container')
   
-  // card.appendChild(headline)
-  
+  card.appendChild(headline)
+  card.appendChild(author)
   author.appendChild(imgCont)
-  // imgCont.appendChild(imgSrc)
-  // author.appendChild(span)
-
-  // headline.textContent = article.headline
-  article.forEach(element => {
-    const headline = document.createElement('div')
-    const span = document.createElement('span')
-    const imgSrc  = document.createElement('img')
-    headline.classList.add('headline')
-    headline.textContent = element.headline
-    span.textContent = element.authorName
-    imgSrc.src = element.authorPhoto
-    card.appendChild(headline)
-    author.appendChild(span)
-    imgCont.appendChild(imgSrc)
-  });
+  imgCont.appendChild(imgSrc)
+  author.appendChild(span)
   
- card.appendChild(author)
-  // span.textContent = article.authorName
-  // imgSrc.src = article.authorPhoto
-
+  headline.textContent = article.headline
+  span.textContent = article.authorName
+  imgSrc.src = article.authorPhoto
+ 
   return card
 }
 
@@ -70,18 +56,77 @@ const cardAppender = (selector) => {
   // Append each card to the element in the DOM that matches the selector passed to the function.
   //
 
-  const card = document.querySelector(selector)
-  const javaDiv = document.querySelector('.javascript')
+  const cardSelector = document.querySelector(selector)
+  const javaDiv = document.querySelector('#javascript')
+  const bsDiv = document.querySelector('#bootstrap')
+  const techDiv = document.querySelector('#technology')
+  const jqDiv = document.querySelector('#jquery')
+  const nodeDiv = document.querySelector('#node.js')
 
   axios.get('http://localhost:5001/api/articles')
-       .then((res) => {
-            const data = Card(res.data.articles.javascript)
-            console.log(res.data.articles.javascript)
-            card.appendChild(data)
-       })
-  
+    .then((res) => {
+                const dataJS = res.data.articles.javascript
+                console.log(dataJS)
 
-  return card
+                const javaElements = dataJS.map((array) => {
+                  let article = Card(array)
+                  return article
+                })
+
+                javaElements.forEach(element => {
+                cardSelector.appendChild(element)
+                })
+                
+                const dataBS = res.data.articles.bootstrap
+                console.log(dataBS)
+
+                const bootElements = dataBS.map((array) => {
+                  let article = Card(array)
+                  return article
+                })
+
+                bootElements.forEach(element => {
+                cardSelector.appendChild(element)
+                })
+
+                const dataTECH = res.data.articles.technology
+                console.log(dataTECH)
+
+                const techElements = dataTECH.map((array) => {
+                  let article = Card(array)
+                  return article
+                })
+
+                techElements.forEach(element => {
+                cardSelector.appendChild(element)
+                })
+
+                const dataJQ = res.data.articles.jquery
+                console.log(dataJQ)
+
+                const jqElements = dataJQ.map((array) => {
+                  let article = Card(array)
+                  return article
+                })
+
+                jqElements.forEach(element => {
+                cardSelector.appendChild(element)
+                })
+
+                const dataNODE = res.data.articles.node
+                console.log(dataNODE)
+
+                const nodeElements = dataNODE.map((array) => {
+                  let article = Card(array)
+                  return article
+                })
+
+                nodeElements.forEach(element => {
+                cardSelector.appendChild(element)
+                })
+      })
+
+  return cardSelector
 }
 
 export { Card, cardAppender }

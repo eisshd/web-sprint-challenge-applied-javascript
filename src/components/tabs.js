@@ -22,7 +22,7 @@ const Tabs = (topics) => {
   
   topics.forEach(element => {
       const tabDiv = document.createElement('div')
-      tabDiv.classList.add(element)
+      tabDiv.id = element
       tabDiv.classList.add('tab')
       tabDiv.textContent = element
       tops.appendChild(tabDiv)
